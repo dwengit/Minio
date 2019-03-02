@@ -1,0 +1,11 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<form action="/MinioService/UploadFile" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" multiple="multiple">
+    <input type="submit" name="name" value="上传" />
+</form>
+
