@@ -13,9 +13,14 @@ namespace MinioDemo.Controllers
 {
     public class MinioServiceController : Controller
     {
-        public static string endpoint = "172.16.37.168:9000";
-        public static string accessKey = "HK0AJ5Y345ZVW2QOSIDD";
-        public static string secretKey = "P8Satb3E9+za6nU7NqWcstYf+Z59Vdr6qKuZly9W";
+        //服务器IP
+        public static string endpoint = "192.168.199.181:9000";
+        //访问密匙
+        public static string accessKey = "Minio";
+        //密匙
+        public static string secretKey = "Test123456";
+        //桶的名称
+        public static string bucketName = "test1";
 
         private MinioClient minio;
 
@@ -41,9 +46,8 @@ namespace MinioDemo.Controllers
 
         public async Task<IActionResult> UploadFile()
         {
-            var bucketName = "test2";
+            //服务器区域
             //var location = "us-east-1";
-
             try
             {
                 bool found = await minio.BucketExistsAsync(bucketName);
@@ -70,6 +74,45 @@ namespace MinioDemo.Controllers
             }
 
             return Json(new { Result = "ok" });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetUploadFile(string FileName)
+        {
+            FileStreamResult fileStreamResult = null;
+            try
+            {
+
+                await Task.Run(async () =>
+                    {
+                        bool found = await minio.BucketExistsAsync(bucketName);
+
+                        if (found)
+                        {
+                            //如果找不到对象，将引发异常，
+                            await minio.StatObjectAsync(bucketName, FileName);
+
+
+
+                            //从桶中获取对象的流
+                            await minio.GetObjectAsync(bucketName, FileName,
+                                                             (stream) =>
+                                                             {
+                                                                 fileStreamResult = File(stream, "application/octet-stream");
+                                                             });
+
+                        }
+                        
+                    }
+                );
+
+                return fileStreamResult;
+            }
+            catch (MinioException e)
+            {
+                Console.Out.WriteLine("Error occurred: " + e);
+            }
+            return fileStreamResult;
         }
 
     }

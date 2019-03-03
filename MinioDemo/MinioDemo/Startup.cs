@@ -56,7 +56,7 @@ namespace MinioDemo
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=MinioService}/{action=Index}/{id?}");
             });
         }
     }

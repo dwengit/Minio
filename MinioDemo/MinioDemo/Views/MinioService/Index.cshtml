@@ -3,9 +3,49 @@
     ViewData["Title"] = "Index";
 }
 
+<link href="~/lib/bootstrap-fileinput/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/lib/bootstrap-fileinput/css/fileinput.css" rel="stylesheet" />
+<script src="~/lib/bootstrap-fileinput/js/jquery-2.0.3.min.js"></script>
+<script src="~/lib/bootstrap-fileinput/js/fileinput.js"></script>
+<script src="~/lib/bootstrap-fileinput/js/fileinput_locale_zh.js"></script>
+<script src="~/lib/bootstrap-fileinput/js/bootstrap.min.js"></script>
 
-<form action="/MinioService/UploadFile" method="post" enctype="multipart/form-data">
-    <input type="file" name="file" multiple="multiple">
-    <input type="submit" name="name" value="上传" />
-</form>
 
+
+@*<form action="/MinioService/UploadFile" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" multiple="multiple">
+        <input type="submit" name="name" value="上传" />
+    </form>*@
+
+<br />
+<br />
+<div class="row" style="height:40%">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <div class="panel panel-default">
+            <div class="panel-heading">文件上传</div>
+            <div class="panel-body">
+                <form enctype="multipart/form-data" asp-controller="UploadFiles">
+                    <input id="file" class="file" type="file" multiple data-min-file-count="1">
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
+<script>
+    $("#file").fileinput({
+        //'allowedFileExtensions': ['jpg', 'png', 'gif'],
+        uploadUrl: "/MinioService/UploadFile",
+    });
+    // 上传成功回调
+    $("#file").on("fileuploaded", function (event, data, previewId, index) {
+        var form = data.form, files = data.files, extra = data.extra, response = data.response, reader = data.reader;
+        alert("上传附件成功");
+    });
+    // 上传失败回调
+    $('#file').on('fileerror', function (event, data, msg) {
+        alert("上传附件成功");
+    });
+</script>
