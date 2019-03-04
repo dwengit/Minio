@@ -5,13 +5,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Shared\**" />
+    <Content Remove="Views\Shared\**" />
+    <EmbeddedResource Remove="Views\Shared\**" />
+    <None Remove="Views\Shared\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
     <PackageReference Include="Minio.NetCore" Version="1.1.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Shared\" />
     <Folder Include="wwwroot\css\" />
     <Folder Include="wwwroot\images\" />
     <Folder Include="wwwroot\js\" />

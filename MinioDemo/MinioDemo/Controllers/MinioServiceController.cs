@@ -77,7 +77,7 @@ namespace MinioDemo.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetUploadFile(string FileName)
+        public async Task<IActionResult> DownloadUploadFile(string FileName)
         {
             FileStreamResult fileStreamResult = null;
             try
